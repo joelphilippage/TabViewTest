@@ -1,4 +1,5 @@
 using Microsoft.UI;
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -64,10 +65,13 @@ namespace TabViewTest
             var width = (int)(CustomDragRegion.ActualWidth * GetScaleAdjustment());
             var height = (int)(CustomDragRegion.ActualHeight * GetScaleAdjustment());
 
+            /*
             titleBar.SetDragRectangles(
             [
                 new RectInt32(x, 0, width, height)
-            ]);
+            ]);*/
+            var window = InputNonClientPointerSource.GetForWindowId(Win32Interop.GetWindowIdFromWindow(WindowNative.GetWindowHandle(this)));
+            window.SetRegionRects(NonClientRegionKind.Caption, [new RectInt32(x, 0, width, height)]);
             Debug.WriteLine("Updated drag region");
         }
 
